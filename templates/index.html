@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Home</title>
+{% endblock %}
+
+{% block body %}
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for catagory, message in messages %}
+          {% if catagory == 'error' %}
+          <div class="p-2 mb-2 bg-warning text-dark">
+              {{ message }}
+          </div>
+          {% else %}
+          <div class="p-2 mb-2 bg-success text-white">
+              {{ message }}
+          </div>
+          {% endif %}
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+  {% include 'navbar.html' %}
+  <div class="table-container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">First Name</th>
+          <th scope="col">Last Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Date added</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if contacts.__len__() == 0 %}
+          <tr>
+            <td class="no-result" colspan="4">No Result</td>
+          </tr>
+        {% endif %}
+        {% for contact in contacts %}
+          <tr>
+            <td>{{contact.first_name}}</td>
+            <td>{{contact.last_name}}</td>
+            <td>{{contact.email}}</td>
+            <td>{{contact.created_at}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

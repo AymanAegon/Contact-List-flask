@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Sign up</title>
+{% endblock %}
+
+{% block body %}
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for catagory, message in messages %}
+            {% if catagory == 'error' %}
+            <div class="p-2 mb-2 bg-warning text-dark">
+                {{ message }}
+            </div>
+            {% else %}
+            <div class="p-2 mb-2 bg-success text-white">
+                {{ message }}
+            </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+  {% endwith %}
+  <div class="form-container">
+    <form class="form" method="POST">
+      <div class="mb-3">
+        <label for="name" class="form-label">Full name</label>
+        <input type="text" class="form-control" id="name" name="name" value="{{ values.name }}">
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="email" name="email" value="{{ values.email }}" aria-describedby="emailHelp">
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+      </div>
+      <div class="mb-3">
+        <label for="password1" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password1" name="password1">
+      </div>
+      <div class="mb-3">
+        <label for="password2" class="form-label">Confirm Password</label>
+        <input type="password" class="form-control" id="password2" name="password2">
+      </div>
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+      <a href="{{ url_for('auth.login') }}" class="btn btn-link">Login</a>
+    </form>
+  </div>
+{% endblock %}

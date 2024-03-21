@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Home</title>
+{% endblock %}
+
+{% block body %}
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for catagory, message in messages %}
+          {% if catagory == 'error' %}
+          <div class="p-2 mb-2 bg-warning text-dark">
+              {{ message }}
+          </div>
+          {% else %}
+          <div class="p-2 mb-2 bg-success text-white">
+              {{ message }}
+          </div>
+          {% endif %}
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+  {% include 'navbar.html' %}
+  <div class="form-container">
+    <form class="form" method="POST">
+      <div class="mb-3">
+        <label for="first-name" class="form-label">First name</label>
+        <input type="text" class="form-control" id="first-name" name="first-name" value="{{ values.first_name }}">
+      </div>
+      <div class="mb-3">
+        <label for="last-name" class="form-label">Last name</label>
+        <input type="text" class="form-control" id="last-name" name="last-name" value="{{ values.last_name }}">
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Contact email address</label>
+        <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" value="{{ values.email }}">
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+      <a href="{{ url_for('views.home') }}" class="btn btn-link">Cancel</a>
+    </form>
+  </div>
+{% endblock %}
