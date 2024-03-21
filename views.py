@@ -29,6 +29,7 @@ def home():
         for c in contacts:
             if q in c.first_name or q in c.last_name or q in c.email:
                 res.append(c)
+        pages = ceil(len(res) / MAX_CONTACTS)
         contacts = res[MAX_CONTACTS * (p - 1):MAX_CONTACTS * p]
     else:
         contacts = contacts[MAX_CONTACTS * (p - 1):MAX_CONTACTS * p]
