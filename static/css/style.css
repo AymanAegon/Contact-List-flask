@@ -27,3 +27,6 @@ nav.pagination {
     justify-content: center;
     padding: 20px 0px 50px 0px;
 }
+.sort-filter {
+    margin-right: 10px;
+}

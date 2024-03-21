@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
 from models import storage
 from models.contact import Contact
-from models.user import User
+from utils.filter import search_filter, sort
 from math import ceil
 
 views = Blueprint('views', __name__)
@@ -12,10 +12,11 @@ MAX_CONTACTS = 20
 @views.route('/')
 @login_required
 def home():
-    contacts = current_user.contacts
-    print("number of contacts: ", len(contacts))
-    pages = ceil(len(contacts) / MAX_CONTACTS)
+    field = request.args.get("sortby", None)
+    contacts = sort(current_user.contacts, field)
     q = request.args.get("search")
+    res = search_filter(contacts, q)
+    pages = ceil(len(res) / MAX_CONTACTS)
     try:
         p = int(request.args.get("page"))
         if p < 1:
@@ -24,16 +25,7 @@ def home():
             p = pages
     except:
         p = 1
-    if q:
-        res = []
-        for c in contacts:
-            if q in c.first_name or q in c.last_name or q in c.email:
-                res.append(c)
-        pages = ceil(len(res) / MAX_CONTACTS)
-        contacts = res[MAX_CONTACTS * (p - 1):MAX_CONTACTS * p]
-    else:
-        contacts = contacts[MAX_CONTACTS * (p - 1):MAX_CONTACTS * p]
-    print("number of pages: ", pages)
+    contacts = res[MAX_CONTACTS * (p - 1):MAX_CONTACTS * p]
     pagination = {"pages": pages, "index": p}
     return render_template("index.html", contacts=contacts, pagination=pagination, home_active=True)
 
