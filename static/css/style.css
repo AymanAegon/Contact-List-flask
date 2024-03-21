@@ -21,3 +21,9 @@ body {
     position: relative;
     left: 47%;
 }
+nav.pagination {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0px 50px 0px;
+}

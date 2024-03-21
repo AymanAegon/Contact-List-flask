@@ -3,23 +3,38 @@ from flask_login import login_required, current_user
 from models import storage
 from models.contact import Contact
 from models.user import User
-from models import storage
+from math import ceil
 
 views = Blueprint('views', __name__)
+MAX_CONTACTS = 20
 
 # the route for the home page
 @views.route('/')
 @login_required
 def home():
     contacts = current_user.contacts
+    print("number of contacts: ", len(contacts))
+    pages = ceil(len(contacts) / MAX_CONTACTS)
     q = request.args.get("search")
+    try:
+        p = int(request.args.get("page"))
+        if p < 1:
+            p = 1
+        if p > pages:
+            p = pages
+    except:
+        p = 1
     if q:
         res = []
         for c in contacts:
             if q in c.first_name or q in c.last_name or q in c.email:
                 res.append(c)
-        contacts = res
-    return render_template("index.html", contacts=contacts, home_active=True)
+        contacts = res[MAX_CONTACTS * (p - 1):MAX_CONTACTS * p]
+    else:
+        contacts = contacts[MAX_CONTACTS * (p - 1):MAX_CONTACTS * p]
+    print("number of pages: ", pages)
+    pagination = {"pages": pages, "index": p}
+    return render_template("index.html", contacts=contacts, pagination=pagination, home_active=True)
 
 @views.route('/new-contact', methods=["GET", "POST"])
 @login_required

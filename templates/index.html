@@ -48,4 +48,23 @@
       </tbody>
     </table>
   </div>
+  <nav class="pagination" aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item {% if pagination.index == 1 %} disabled {% endif %}">
+        <a class="page-link" href="?page={{pagination.index - 1}}" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      {% for i in range(1, pagination.pages + 1) %}
+        <li class="page-item {% if i == pagination.index %} active {% endif %}">
+          <a class="page-link" href="?page={{i}}">{{i}}</a>
+        </li>
+      {% endfor %}
+      <li class="page-item {% if pagination.index == pagination.pages %} disabled {% endif %}">
+        <a class="page-link" href="?page={{pagination.index + 1}}" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
 {% endblock %}
