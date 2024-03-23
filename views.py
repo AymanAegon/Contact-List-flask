@@ -1,9 +1,9 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
-from models import storage
 from models.contact import Contact
 from utils.filter import search_filter, sort
 from math import ceil
+from werkzeug.security import generate_password_hash, check_password_hash
 
 views = Blueprint('views', __name__)
 MAX_CONTACTS = 20
@@ -58,5 +58,48 @@ def add_contact():
 @views.route('/profile')
 @login_required
 def profile():
-    contacts = current_user.contacts
-    return render_template("profile.html", contacts=contacts)
+    contacts = len(current_user.contacts)
+    return render_template("profile.html", contacts=contacts, user=current_user)
+
+@views.route('/edit-name', methods=["POST"])
+@login_required
+def edit_name():
+    name = request.form.get('name')
+    if len(name) < 4:
+        flash('Name must be greater than 4 characters!', category="error")
+    else:
+        current_user.name = name
+        current_user.save()
+        flash('Your name has been changed!', category="success")
+    return redirect(url_for("views.profile"))
+
+@views.route('/edit-email', methods=["POST"])
+@login_required
+def edit_email():
+    email = request.form.get('email')
+    if len(email) < 5:
+        flash('Your email must be greater than 5 characters!', category="error")
+    else:
+        current_user.email = email
+        current_user.save()
+        flash('Your email has been changed!', category="success")
+    return redirect(url_for("views.profile"))
+
+@views.route('/edit-password', methods=["POST"])
+@login_required
+def edit_password():
+    password = request.form.get('old_password')
+    password1 = request.form.get('password1')
+    password2 = request.form.get('password2')
+
+    if check_password_hash(current_user.password, password) is False:
+        flash('Incorrect password, Try again!', category="error")
+    elif len(password1) < 8:
+        flash('Password must be greater than 8 characters!', category="error")
+    elif password1 != password2:
+        flash('Passwords don\'t match', category="error")
+    else:
+        current_user.password = generate_password_hash(password1, method="scrypt")
+        current_user.save()
+        flash('Password has been changed!', category="success")
+    return redirect(url_for("views.profile"))

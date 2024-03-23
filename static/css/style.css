@@ -30,3 +30,13 @@ nav.pagination {
 .sort-filter {
     margin-right: 10px;
 }
+.profile-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 40px 0;
+}
+.profile-info {
+    border: 1px solid lightblue;
+    padding: 20px;
+}

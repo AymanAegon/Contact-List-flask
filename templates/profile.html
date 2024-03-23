@@ -21,5 +21,103 @@
     {% endif %}
   {% endwith %}
   {% include 'navbar.html' %}
-  
+  <div class="profile-container">
+    <div class="profile-info">
+      <div class="name">
+        Your name
+        <span>{{ user.name }}</span>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Edit
+        </button>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Name</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form class="row g-3" action="/edit-name" method="post">
+                  <div class="col-auto">
+                    <input type="text" class="form-control" name="name" value="{{ user.name }}">
+                  </div>
+                  <div class="col-auto">
+                    <button type="submit" class="btn btn-primary mb-3">Save</button>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="email">
+        Your email
+        <span>{{ user.email }}</span>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#emailModal">
+          Edit
+        </button>
+        <div class="modal fade" id="emailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Email</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form action="/edit-email" method="post">
+                  <input type="email" name="email" value="{{ user.email }}">
+                  <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="password">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#passwordModal">
+          Change Password
+        </button>
+        <div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Change Password</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form action="/edit-password" method="post">
+                  <div class="mb-3">
+                    <label for="old-password" class="form-label">Old password</label>
+                    <input type="password" class="form-control" id="Olp-password" name="old_password">
+                  </div>
+                  <div class="mb-3">
+                    <label for="password1" class="form-label">New password</label>
+                    <input type="password" class="form-control" id="password1" name="password1">
+                  </div>
+                  <div class="mb-3">
+                    <label for="password2" class="form-label">Confirm new password</label>
+                    <input type="password" class="form-control" id="password2" name="password2">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contacts">
+        Total Contacts
+        <span>{{ contacts }}</span>
+      </div>
+    </div>
+  </div>
 {% endblock %}
