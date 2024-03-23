@@ -26,7 +26,7 @@ def home():
     except:
         p = 1
     contacts = res[MAX_CONTACTS * (p - 1):MAX_CONTACTS * p]
-    pagination = {"pages": pages, "index": p}
+    pagination = {"pages": pages, "index": p, "sort_option": field}
     return render_template("index.html", contacts=contacts, pagination=pagination, home_active=True)
 
 @views.route('/new-contact', methods=["GET", "POST"])
