@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Home</title>
+{% endblock %}
+
+{% block body %}
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for catagory, message in messages %}
+          {% if catagory == 'error' %}
+          <div class="p-2 mb-2 bg-warning text-dark">
+              {{ message }}
+          </div>
+          {% else %}
+          <div class="p-2 mb-2 bg-success text-white">
+              {{ message }}
+          </div>
+          {% endif %}
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+  {% include 'navbar.html' %}
+{% endblock %}

@@ -22,7 +22,7 @@
   {% endwith %}
   {% include 'navbar.html' %}
   <div class="table-container">
-    <table class="table">
+    <table class="table table-hover">
       <thead>
         <tr>
           <th scope="col">First Name</th>
@@ -38,7 +38,7 @@
           </tr>
         {% endif %}
         {% for contact in contacts %}
-          <tr>
+          <tr onclick='location.href=`{{ url_for("views.contact_info", id=contact.id) }}`' class="contact-tr">
             <td>{{contact.first_name}}</td>
             <td>{{contact.last_name}}</td>
             <td>{{contact.email}}</td>

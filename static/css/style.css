@@ -40,3 +40,14 @@ nav.pagination {
     border: 1px solid lightblue;
     padding: 20px;
 }
+.contact-table {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.contact-table table {
+    width: 60%;
+}
+.contact-tr {
+    cursor: pointer;
+}

@@ -1,6 +1,7 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, abort
 from flask_login import login_required, current_user
 from models.contact import Contact
+from models import storage
 from utils.filter import search_filter, sort
 from math import ceil
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -103,3 +104,42 @@ def edit_password():
         current_user.save()
         flash('Password has been changed!', category="success")
     return redirect(url_for("views.profile"))
+
+@views.route('/contact/<id>', methods=["GET", "POST"])
+@login_required
+def contact_info(id):
+    contact = storage.get(Contact, id)
+    if contact is None:
+        abort(404)
+        # return render_template('404.html'), 404
+    if request.method == "POST":
+        first = request.form.get("first_name")
+        last = request.form.get("last_name")
+        email = request.form.get("email")
+        if len(first) < 4:
+            flash('First name must be greater than 4 characters!', category="error")
+        elif len(last) < 4:
+            flash('Last name must be greater than 4 characters!', category="error")
+        elif len(email) < 5:
+            flash('Email must be greater than 5 characters!', category="error")
+        else:
+            flash('Contact has been edited!', category="success")
+            contact.first_name = first
+            contact.last_name = last
+            contact.email = email
+            contact.save()
+    return render_template("contact.html", contact=contact)
+
+@views.route('/delete/<id>')
+@login_required
+def delete_contact(id):
+    contact = storage.get(Contact, id)
+    if contact is None:  # checking if the client with id=client_id exists
+        return render_template('404.html'), 404
+    if current_user.id != contact.user_id:  # checking if user is the owner of the client
+        flash('An error has occurred!', category="error")
+        return redirect(url_for("views.home"))
+    contact.delete()
+    storage.save()
+    flash('Contact has been deleted!', category="success")
+    return redirect(url_for("views.home"))
