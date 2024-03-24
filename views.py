@@ -10,6 +10,10 @@ views = Blueprint('views', __name__)
 MAX_CONTACTS = 30
 
 # the route for the home page
+@views.route('/home')
+def landing_page():
+    return render_template("landing-page.html")
+
 @views.route('/')
 @login_required
 def home():
