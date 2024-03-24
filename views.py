@@ -6,7 +6,7 @@ from math import ceil
 from werkzeug.security import generate_password_hash, check_password_hash
 
 views = Blueprint('views', __name__)
-MAX_CONTACTS = 20
+MAX_CONTACTS = 30
 
 # the route for the home page
 @views.route('/')

@@ -13,6 +13,11 @@ def search_filter(contacts: List[Contact], q: str=None) -> List[Contact]:
 
 def sort(contacts: List[Contact], field: str=None, reverse: bool=False) -> List[Contact]:
     """returns a list of contacts sorted."""
-    if not field or not hasattr(Contact, field):
+    if field == 'newest':
+        field = "created_at"
+        reverse = True
+    elif field == "oldest":
+        field = "created_at"
+    elif not field or not hasattr(Contact, field):
         field = "id"
     return sorted(contacts, key=lambda x: x.__getattribute__(field), reverse=reverse)

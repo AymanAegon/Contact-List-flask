@@ -23,30 +23,19 @@
         </li>
       </ul>
       {% if home_active %}
-      <!-- <div class="nav-item dropdown sort-filter">
-        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Sort by
-        </a>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="?sortby=first_name">First name</a></li>
-          <li><a class="dropdown-item" href="?sortby=last_name">Last name</a></li>
-          <li><a class="dropdown-item" href="?sortby=email">Email</a></li>
-          <li><a class="dropdown-item" href="?sortby=created_at">Date added</a></li>
-        </ul>
-      </div> -->
       <form class="d-flex" role="search">
         <select class="form-select" name="sortby" aria-label="Default select example">
           <option>Sort by</option>
           <option {% if pagination.sort_option == 'first_name' %} selected {% endif %}
-            value="first_name">
-            First name
-          </option>
+            value="first_name">First name</option>
           <option {% if pagination.sort_option == 'last_name' %} selected {% endif %}
             value="last_name">Last name</option>
           <option {% if pagination.sort_option == 'email' %} selected {% endif %}
             value="email">Email</option>
-          <option {% if pagination.sort_option == 'created_at' %} selected {% endif %}
-            value="created_at">Date added</option>
+          <option {% if pagination.sort_option == 'oldest' %} selected {% endif %}
+            value="oldest">Oldest</option>
+          <option {% if pagination.sort_option == 'newest' %} selected {% endif %}
+            value="newest">Newest</option>
         </select>
         <input class="form-control me-2" type="search" placeholder="Search" name="search" aria-label="Search">
         <button class="btn btn-outline-secondary" type="submit">
