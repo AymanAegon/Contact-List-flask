@@ -15,7 +15,7 @@ class Contact(BaseModel, Base):
         __tablename__ = "contacts"
         first_name = Column(String(40), nullable=False)
         last_name = Column(String(40), nullable=False)
-        email = Column(String(128), nullable=False, unique=True)
+        email = Column(String(128), nullable=False)
         user_id = Column(String(128), ForeignKey("users.id"), nullable=False)
 
     else:
