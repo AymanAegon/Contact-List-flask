@@ -26,8 +26,7 @@ body {
     padding: 20px 40px;
 }
 .no-result {
-    position: relative;
-    left: 47%;
+    text-align: center;
 }
 nav.pagination {
     width: 100%;
